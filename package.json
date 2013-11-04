@@ -1,0 +1,8 @@
+{
+  "name": "quick-forms",
+  "version":"0.1.20130922",
+  "description": "A node module that provides methods to easily generate well structured form elements with labels",
+  "author": "Rob Kohr <robkohr@gmail.com>",
+  "dependencies": {
+  }
+}
