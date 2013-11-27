@@ -1,11 +1,15 @@
 exports.req = null;//set to express req 
-
-exports.open = function(path, name, label){
+var nl = "\n    ";
+exports.open = function(path, name, label, options){
     var out = '';
     if(!label)
 	label = pretty(name);
     id_part = 'id="form_' + name + '"';
-    out += '<form '+id_part+' method="post">';
+    extras = '';
+    if((options)&&(options.enctype)){
+	extras+=' enctype="multipart/form-data"';
+    }
+    out += '<form '+id_part+' method="post"'+extras+'>';
     out += exports.hidden('form', name);
     out += exports.fieldsetStart(name);
     return out;
@@ -26,8 +30,8 @@ exports.hidden = function(params, value){
 
 exports.fieldsetStart = function(params){
     params = paramsToObj(params);
-    var out = '<fieldset>';
-    out += '<legend>'+pretty(params.name)+'</legend>';
+    var out = nl+'<fieldset>';
+    out += nl+'<legend>'+pretty(params.name)+'</legend>';
     return out;
 }
 
@@ -48,6 +52,17 @@ exports.input = function(params){
     params.input = makeInput(params);
     return wrapInput(params);
 }
+
+var basic = function(params, type){
+    params = paramsToObj(params);
+    params.type = type;
+    return exports.input(params);
+}
+
+exports.file = function(params){
+    return basic(params, 'file');    
+}
+
 
 exports.password = function(params){
     params = paramsToObj(params);
@@ -79,12 +94,12 @@ function wrapInput(params){
     if(!params.id)
 	params.id = 'form_'+name;
     var label='<label for="'+params.id+'">'+params.label+'</label>';
-    out+='<p>' + label + params.input + '</p>';
+    out+=nl+'<p>' + label + params.input + '</p>';
     return out;
 }
 
 function makeInput(params){
-    var out = '<input';
+    var out = nl+'<input';
     var inputFields = ['type', 'value', 'name', 'id'];
     if(!params.id)
 	params.id = 'form_' + params.name
