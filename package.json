@@ -1,6 +1,6 @@
 {
   "name": "quick-forms",
-  "version":"0.1.20130922",
+  "version":"0.1.20131126",
   "description": "Outputs form element strings",
   "author": "Rob Kohr <robkohr@gmail.com>",
   "dependencies": {
